@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qwickscan/presentation/screens/home_screen.dart';
-import 'package:qwickscan/utils/themes.dart';
+
+import '../../utils/themes.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routename = "/";
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.of(context).pushNamed(HomeScreen.routename);
+      Navigator.of(context).pushNamed(LoginScreen.routename);
     });
   }
 

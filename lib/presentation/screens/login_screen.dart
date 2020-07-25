@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qwickscan/utils/themes.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const routename = "/home";
+import '../../utils/themes.dart';
+
+class LoginScreen extends StatelessWidget {
+  static const routename = "/login";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

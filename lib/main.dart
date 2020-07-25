@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qwickscan/presentation/screens/home_screen.dart';
-import 'package:qwickscan/presentation/screens/splash_screen.dart';
-import 'package:qwickscan/utils/themes.dart';
+
+import 'presentation/screens/login_screen.dart';
+import 'presentation/screens/splash_screen.dart';
+import 'utils/themes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashScreen(),
       routes: {
-        HomeScreen.routename: (context) => HomeScreen(),
+        LoginScreen.routename: (context) => LoginScreen(),
       },
     );
   }
