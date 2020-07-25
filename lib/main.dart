@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qwickscan/presentation/screens/home_screen.dart';
 
 import 'presentation/screens/login_screen.dart';
 import 'presentation/screens/splash_screen.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         LoginScreen.routename: (context) => LoginScreen(),
+        HomeScreen.routename: (context) => HomeScreen(),
       },
     );
   }

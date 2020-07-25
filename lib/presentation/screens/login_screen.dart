@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qwickscan/presentation/screens/home_screen.dart';
 
 import '../../utils/themes.dart';
 
@@ -118,7 +119,8 @@ class LoginScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: borderRadius8,
                         ),
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context)
+                            .pushReplacementNamed(HomeScreen.routename),
                       ),
                     ),
                     SizedBox(

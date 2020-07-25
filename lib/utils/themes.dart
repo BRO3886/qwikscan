@@ -8,8 +8,6 @@ const Yellow = Color(0xFFFEB43B);
 
 const Grey = Color(0xFFF3F3F3);
 
-final borderRadius8 = BorderRadius.circular(8);
-
 const SmallGreyText = TextStyle(
   color: Color.fromRGBO(0, 0, 0, 0.5),
   fontSize: 14,
@@ -27,4 +25,15 @@ const BigHeadingText = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
-const NormalLightText = TextStyle(fontWeight: FontWeight.w300);
+const NormalLightText = TextStyle(
+  fontWeight: FontWeight.w300,
+);
+
+const MediumHeadingText = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+);
+
+final borderRadius8 = BorderRadius.circular(8);
+
+final borderRadius12 = BorderRadius.circular(12);
