@@ -1,19 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:qwickscan/presentation/screens/cart_screen.dart';
+import 'package:qwickscan/presentation/screens/qr_code_display.dart';
 
 import '../../utils/themes.dart';
 import '../widgets/card_widget.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const routename = "/home";
+class CartScreen extends StatefulWidget {
+  static const routename = "/cart";
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _CartScreenState createState() => _CartScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _CartScreenState extends State<CartScreen> {
   ScrollController _hideButtonController;
+  TextEditingController _titleController =
+      TextEditingController(text: 'Cart 24 July 2020');
   bool _isVisible = true;
   @override
   void initState() {
@@ -82,12 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(CartScreen.routename),
+            onPressed: () {},
             label: Row(
               children: <Widget>[
                 Text(
-                  'Start Shopping',
+                  'Add Items',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
@@ -108,10 +110,46 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: <Widget>[
           SliverAppBar(
             elevation: 0,
-            title: Text('Hi, Rithik'),
+            leading: IconButton(
+              icon: CircleAvatar(
+                backgroundColor: Yellow,
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () => Navigator.maybePop(context),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: CircleAvatar(
+                  backgroundColor: Purple,
+                  child: Icon(
+                    Icons.border_all,
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(QRDisplayScreen.routename),
+              ),
+            ],
             floating: true,
             snap: true,
-            titleSpacing: -40,
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: TextField(
+                maxLines: 2,
+                minLines: 1,
+                expands: false,
+                controller: _titleController,
+                style: PurpleHeadingText.copyWith(fontSize: 20),
+                decoration: InputDecoration(
+                  filled: false,
+                ),
+              ),
+            ),
           ),
           SliverToBoxAdapter(
             child: Padding(
@@ -120,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Previous Orders',
+                    'TOTAL: \$500',
                     style: MediumHeadingText,
                   ),
                   SizedBox(
@@ -146,15 +184,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// AnimatedList(
-//                     initialItemCount: 10,
-//                     itemBuilder: (context, index, animation) {
-//                       return SlideTransition(
-//                         position: animation.drive(
-//                           Tween(begin: Offset(0, 10), end: Offset(0, 0)),
-//                         ),
-//                         child: CartWidget(),
-//                       );
-//                     },
-//                   )
