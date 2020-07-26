@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qwickscan/presentation/widgets/show_up.dart';
 
+import '../../services/utils/shared_prefs_custom.dart';
 import '../../utils/themes.dart';
+import '../widgets/show_up.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,9 +17,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.of(context).pushNamed(LoginScreen.routename);
-    });
+    _checkStatus();
+  }
+
+  _checkStatus() async {
+    final sp = SharedPrefs();
+    bool loginStatus = await sp.getLoggedInStatus();
+    if (loginStatus == false || loginStatus == null) {
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.of(context).pushNamed(LoginScreen.routename);
+      });
+    } else {
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.of(context).pushNamed(HomeScreen.routename);
+      });
+    }
   }
 
   @override
