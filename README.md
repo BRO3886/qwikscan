@@ -1,8 +1,6 @@
-# qwickscan
 
-A new Flutter project.
 
-## Getting Started
+## Getting Started With Flutter
 
 This project is a starting point for a Flutter application.
 
