@@ -12,29 +12,30 @@ import '../../utils/themes.dart';
 import 'object_detection/item_scanner.dart';
 import 'qr_code_display.dart';
 
-class CartScreen extends StatelessWidget {
-  static const routename = "/cart";
+class CartScreenHistory extends StatelessWidget {
+  static const routename = "/cart-history";
   @override
   Widget build(BuildContext context) {
     final cart = ModalRoute.of(context).settings.arguments as Cart;
     return BlocProvider(
       create: (context) => ItemBloc(),
-      child: CartScreenBuilder(
+      child: CartScreenHistoryBuilder(
         cart: cart,
       ),
     );
   }
 }
 
-class CartScreenBuilder extends StatefulWidget {
+class CartScreenHistoryBuilder extends StatefulWidget {
   final Cart cart;
 
-  const CartScreenBuilder({Key key, this.cart}) : super(key: key);
+  const CartScreenHistoryBuilder({Key key, this.cart}) : super(key: key);
   @override
-  _CartScreenBuilderState createState() => _CartScreenBuilderState();
+  _CartScreenHistoryBuilderState createState() =>
+      _CartScreenHistoryBuilderState();
 }
 
-class _CartScreenBuilderState extends State<CartScreenBuilder> {
+class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
   ScrollController _hideButtonController;
   ItemBloc _itemBloc;
   TextEditingController _titleController;
@@ -169,6 +170,8 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
             } else if (state is FetchItemsSuccess) {
               return buildSuccessUI(context, state.items);
             }
+            print(state.toString());
+            return buildLoadingWidget();
           },
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qwickscan/data/models/cart.dart';
+import 'package:qwickscan/presentation/screens/cart_screen_history.dart';
 
 import '../../utils/themes.dart';
 
@@ -21,7 +22,10 @@ class CartWidget extends StatelessWidget {
         ),
         child: InkWell(
           borderRadius: borderRadius12,
-          onTap: () {},
+          onTap: () => Navigator.of(context).pushNamed(
+            CartScreenHistory.routename,
+            arguments: cart,
+          ),
           child: Container(
             child: ListTile(
               title: Text(

@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qwickscan/services/utils/shared_prefs_custom.dart';
 import 'package:qwickscan/utils/themes.dart';
 
-class QRDisplayScreen extends StatelessWidget {
+class QRDisplayScreen extends StatefulWidget {
   static const routename = "/qr-display";
+
+  @override
+  _QRDisplayScreenState createState() => _QRDisplayScreenState();
+}
+
+class _QRDisplayScreenState extends State<QRDisplayScreen> {
+  bool _loading = true;
+  String id = 'sid';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getuserId();
+  }
+
+  _getuserId() async {
+    setState(() {
+      _loading = true;
+    });
+    final sp = SharedPrefs();
+    String uid = await sp.getUserID();
+    setState(() {
+      id = uid;
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +59,13 @@ class QRDisplayScreen extends StatelessWidget {
               'Scan this QR at the counter to checkout',
               style: SmallGreyText,
             ),
-            QrImage(
-              data: 'siddverma1999@gmail.com',
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
+            _loading
+                ? CircularProgressIndicator()
+                : QrImage(
+                    data: id,
+                    version: QrVersions.auto,
+                    size: 200.0,
+                  ),
           ],
         ),
       ),

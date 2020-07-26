@@ -3,12 +3,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import '../../data/models/cart.dart';
 
+import '../../data/models/cart.dart';
 import '../../services/blocs/cart/cart_bloc.dart';
 import '../../services/utils/shared_prefs_custom.dart';
 import '../../utils/themes.dart';
-import '../widgets/card_widget.dart';
+import '../widgets/cart_widget.dart';
 import 'cart_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -45,6 +45,8 @@ class _HomeScreenBuilderState extends State<HomeScreenBuilder> {
     });
 
     _cartBloc = BlocProvider.of<CartBloc>(context);
+
+    _cartBloc.add(FetchAllCarts());
 
     _hideButtonController = ScrollController();
 
@@ -171,8 +173,12 @@ class _HomeScreenBuilderState extends State<HomeScreenBuilder> {
             Future.delayed(
               Duration(seconds: 2),
               () {
+                _cartBloc.add(FetchAllCarts());
                 _cartBloc.close();
-                Navigator.of(context).pushNamed(CartScreen.routename);
+                Navigator.of(context).pushNamed(
+                  CartScreen.routename,
+                  arguments: state.cart,
+                );
               },
             );
           }
