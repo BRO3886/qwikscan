@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qwickscan/presentation/screens/cart_screen.dart';
-import 'package:qwickscan/presentation/screens/home_screen.dart';
-import 'package:qwickscan/presentation/screens/qr_code_display.dart';
 
+import 'presentation/screens/cart_screen.dart';
+import 'presentation/screens/home_screen.dart';
 import 'presentation/screens/login_screen.dart';
+import 'presentation/screens/qr_code_display.dart';
 import 'presentation/screens/splash_screen.dart';
 import 'utils/themes.dart';
 

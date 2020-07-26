@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:qwickscan/presentation/screens/object_detection/item_scanner.dart';
 import 'package:qwickscan/presentation/screens/qr_code_display.dart';
 
 import '../../utils/themes.dart';
@@ -15,40 +17,63 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   ScrollController _hideButtonController;
+
   TextEditingController _titleController =
       TextEditingController(text: 'Cart 24 July 2020');
+
   bool _isVisible = true;
+
   @override
   void initState() {
     super.initState();
     _hideButtonController = ScrollController();
-    _hideButtonController.addListener(() {
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        if (_isVisible == true) {
-          // print("$_isVisible up");
-          setState(() {
-            _isVisible = false;
-          });
-        }
-      } else {
+
+    _hideButtonController.addListener(
+      () {
         if (_hideButtonController.position.userScrollDirection ==
-            ScrollDirection.forward) {
-          if (_isVisible == false) {
-            // print("$_isVisible down");
+            ScrollDirection.reverse) {
+          if (_isVisible == true) {
+            // print("$_isVisible up");
             setState(() {
-              _isVisible = true;
+              _isVisible = false;
             });
           }
+        } else {
+          if (_hideButtonController.position.userScrollDirection ==
+              ScrollDirection.forward) {
+            if (_isVisible == false) {
+              // print("$_isVisible down");
+              setState(() {
+                _isVisible = true;
+              });
+            }
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
     _hideButtonController.dispose();
+  }
+
+  _openCameraScreen() async {
+    List<CameraDescription> cameras;
+    try {
+      cameras = await availableCameras();
+    } on CameraException catch (e) {
+      print('Error: $e.code\nError Message: $e.message');
+      return;
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => ItemScanScreen(cameras: cameras),
+      ),
+    );
   }
 
   @override
@@ -85,7 +110,7 @@ class _CartScreenState extends State<CartScreen> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: _openCameraScreen,
             label: Row(
               children: <Widget>[
                 Text(
