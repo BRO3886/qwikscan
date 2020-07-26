@@ -6,6 +6,10 @@ import 'package:qwickscan/utils/themes.dart';
 class QRDisplayScreen extends StatefulWidget {
   static const routename = "/qr-display";
 
+  final String cartId;
+
+  const QRDisplayScreen(this.cartId);
+
   @override
   _QRDisplayScreenState createState() => _QRDisplayScreenState();
 }
@@ -62,7 +66,7 @@ class _QRDisplayScreenState extends State<QRDisplayScreen> {
             _loading
                 ? CircularProgressIndicator()
                 : QrImage(
-                    data: id,
+                    data: widget.cartId,
                     version: QrVersions.auto,
                     size: 200.0,
                   ),

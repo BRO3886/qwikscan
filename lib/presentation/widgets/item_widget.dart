@@ -32,7 +32,7 @@ class ItemWidget extends StatelessWidget {
               leading: ClipRRect(
                 borderRadius: borderRadius8,
                 child: Image.network(
-                  "https://iowaagliteracy.files.wordpress.com/2018/09/apple10.jpg",
+                  item.itemImageUrl,
                 ),
               ),
               subtitle: Column(

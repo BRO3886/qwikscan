@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routename: (context) => HomeScreen(),
         CartScreen.routename: (context) => CartScreen(),
         CartScreenHistory.routename: (context) => CartScreenHistory(),
-        QRDisplayScreen.routename: (context) => QRDisplayScreen(),
+        // QRDisplayScreen.routename: (context) => QRDisplayScreen(),
       },
     );
   }

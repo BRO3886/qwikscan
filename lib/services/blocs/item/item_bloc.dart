@@ -24,6 +24,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   ) async* {
     final token = await sp.getUserToken();
     if (event is GetCartItems) {
+      yield ItemLoading();
       final response = await repository.fetchAllItems(token, event.cartId);
       print("cart id is ${event.cartId}");
       switch (response.status) {
@@ -37,6 +38,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
           break;
       }
     } else if (event is AddItem) {
+      yield ItemLoading();
       final response = await repository.addItem(token, event.data);
       switch (response.status) {
         case Status.LOADING:

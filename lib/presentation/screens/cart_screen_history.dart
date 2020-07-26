@@ -91,7 +91,7 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
       print('Error: $e.code\nError Message: $e.message');
       return;
     }
-    Navigator.push(
+    final data = await Navigator.push(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
@@ -101,6 +101,12 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
         ),
       ),
     );
+    print(data);
+    if (data == true) {
+      _itemBloc.add(GetCartItems(
+        cartId: widget.cart.cartId,
+      ));
+    }
   }
 
   @override
@@ -141,7 +147,7 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
             label: Row(
               children: <Widget>[
                 Text(
-                  'Add Items',
+                  'Add Items ',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
@@ -276,8 +282,12 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(QRDisplayScreen.routename),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QRDisplayScreen(widget.cart.cartId),
+                ),
+              ),
             ),
           ],
           floating: true,

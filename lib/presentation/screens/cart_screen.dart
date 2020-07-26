@@ -79,7 +79,7 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
   void dispose() {
     super.dispose();
     _hideButtonController.dispose();
-    _itemBloc.close();
+    // _itemBloc.close();
   }
 
   _openCameraScreen() async {
@@ -90,10 +90,9 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
       print('Error: $e.code\nError Message: $e.message');
       return;
     }
-    final data = await Navigator.push(
+    final data = await Navigator.push<bool>(
       context,
       MaterialPageRoute(
-        fullscreenDialog: true,
         builder: (context) => ItemScanScreen(
           cameras: cameras,
           cartId: widget.cart.cartId,
@@ -170,6 +169,7 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
               _itemBloc.add(GetCartItems(
                 cartId: widget.cart.cartId,
               ));
+              return buildLoadingWidget();
             } else if (state is FetchItemsFailure) {
               return errorWidget(state.message);
             } else if (state is ItemLoading) {
@@ -279,8 +279,12 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(QRDisplayScreen.routename),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QRDisplayScreen(widget.cart.cartId),
+                ),
+              ),
             ),
           ],
           floating: true,
