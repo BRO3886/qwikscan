@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qwickscan/presentation/screens/home_screen.dart';
+import 'package:qwickscan/presentation/widgets/show_up.dart';
 
 import '../../utils/themes.dart';
 
@@ -17,7 +18,10 @@ class LoginScreen extends StatelessWidget {
         slivers: <Widget>[
           SliverAppBar(
             elevation: 0,
-            title: Text('QwickScan'),
+            title: ShowUp(
+              child: Text('QwickScan'),
+              delay: Duration(milliseconds: 100),
+            ),
             floating: true,
             snap: true,
             titleSpacing: -40,
@@ -27,9 +31,12 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              child: Text(
-                'WE MAKE SHOPPING EASY',
-                style: SmallGreyText,
+              child: ShowUp(
+                delay: Duration(milliseconds: 150),
+                child: Text(
+                  'WE MAKE SHOPPING EASY',
+                  style: SmallGreyText,
+                ),
               ),
             ),
           ),
@@ -44,114 +51,117 @@ class LoginScreen extends StatelessWidget {
                 horizontal: 16,
                 vertical: 8,
               ),
-              child: Form(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'LOGIN',
-                      style: BigHeadingText,
-                    ),
-                    Container(
-                      width: 72,
-                      height: 4,
-                      decoration: BoxDecoration(
-                          color: Purple, borderRadius: borderRadius8),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Text(
-                      'EMAIL',
-                      style: NormalLightText,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: 'john@example.com',
+              child: ShowUp(
+                delay: Duration(milliseconds: 200),
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'LOGIN',
+                        style: BigHeadingText,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'PASSWORD',
-                      style: NormalLightText,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.lock),
-                        hintText: '••••••',
+                      Container(
+                        width: 72,
+                        height: 4,
+                        decoration: BoxDecoration(
+                            color: Purple, borderRadius: borderRadius8),
                       ),
-                    ),
-                    FlatButton(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: borderRadius8,
+                      SizedBox(
+                        height: 40,
                       ),
-                      child: Text(
-                        'FORGOT PASSWORD?',
-                        style: SmallGreyText.copyWith(
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
+                      Text(
+                        'EMAIL',
+                        style: NormalLightText,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person),
+                          hintText: 'john@example.com',
                         ),
                       ),
-                      onPressed: () {},
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 52,
-                      child: RaisedButton(
-                        color: Yellow,
-                        child: Text('LOGIN'),
-                        textColor: Colors.white,
-                        elevation: 0,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'PASSWORD',
+                        style: NormalLightText,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
+                          hintText: '••••••',
+                        ),
+                      ),
+                      FlatButton(
+                        padding: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
                           borderRadius: borderRadius8,
                         ),
-                        onPressed: () => Navigator.of(context)
-                            .pushReplacementNamed(HomeScreen.routename),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: borderRadius8,
-                        ),
-                        onPressed: () {},
-                        child: RichText(
-                          text: TextSpan(
-                            style: SmallGreyText,
-                            children: [
-                              TextSpan(
-                                text: 'DONT HAVE AN ACCOUNT? ',
-                              ),
-                              TextSpan(
-                                text: 'SIGN UP',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                ),
-                              )
-                            ],
+                        child: Text(
+                          'FORGOT PASSWORD?',
+                          style: SmallGreyText.copyWith(
+                            fontSize: 12,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
+                        onPressed: () {},
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 52,
+                        child: RaisedButton(
+                          color: Yellow,
+                          child: Text('LOGIN'),
+                          textColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: borderRadius8,
+                          ),
+                          onPressed: () => Navigator.of(context)
+                              .pushReplacementNamed(HomeScreen.routename),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: borderRadius8,
+                          ),
+                          onPressed: () {},
+                          child: RichText(
+                            text: TextSpan(
+                              style: SmallGreyText,
+                              children: [
+                                TextSpan(
+                                  text: 'DONT HAVE AN ACCOUNT? ',
+                                ),
+                                TextSpan(
+                                  text: 'SIGN UP',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
