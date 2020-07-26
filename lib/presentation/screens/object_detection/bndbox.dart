@@ -30,7 +30,7 @@ class BoundBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ItemBloc(),
-      child: BoundBox(
+      child: BoundBoxBuilder(
         results,
         previewH,
         previewW,
