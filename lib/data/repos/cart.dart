@@ -44,4 +44,42 @@ class CartRepository {
       return ApiResponse.error(EXCEPTION + "error: ${e.toString()}");
     }
   }
+
+  Future<ApiResponse<Cart>> createCart(String token, String name) async {
+    final url = uri + CreateCartRoute;
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token"},
+        body: jsonEncode({
+          "cart_name": name,
+        }),
+      );
+
+      print(response.statusCode);
+
+      switch (response.statusCode) {
+        case 201:
+          Map<String, dynamic> parsedJson =
+              jsonDecode(utf8.decode(response.bodyBytes));
+          return ApiResponse.completed(Cart.fromJson(parsedJson["cart"]));
+          break;
+        case 401:
+          return ApiResponse.error(INVALID_CREDS);
+          break;
+        case 500:
+          return ApiResponse.error(EXCEPTION);
+          break;
+        default:
+          return ApiResponse.error("unhandled! " + EXCEPTION);
+          break;
+      }
+    } on SocketException {
+      return ApiResponse.error(NO_INTERNET_CONNECTION);
+    } catch (e) {
+      print(e.toString());
+      return ApiResponse.error(EXCEPTION + "error: ${e.toString()}");
+    }
+  }
 }

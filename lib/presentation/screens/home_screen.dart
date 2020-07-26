@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qwickscan/data/models/cart.dart';
+import 'package:intl/intl.dart';
+import '../../data/models/cart.dart';
 
 import '../../services/blocs/cart/cart_bloc.dart';
 import '../../services/utils/shared_prefs_custom.dart';
@@ -110,8 +112,13 @@ class _HomeScreenBuilderState extends State<HomeScreenBuilder> {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(CartScreen.routename),
+            onPressed: () {
+              var format = DateFormat.yMMMEd();
+              _cartBloc.add(
+                CreateCart(name: 'Cart ${format.format(DateTime.now())}'),
+              );
+              // SliverAnimatedList.of(context).inser
+            },
             label: Row(
               children: <Widget>[
                 Text(
@@ -130,20 +137,62 @@ class _HomeScreenBuilderState extends State<HomeScreenBuilder> {
         child: Container(),
         preferredSize: Size.fromHeight(40),
       ),
-      body: BlocBuilder<CartBloc, CartState>(
+      body: BlocListener<CartBloc, CartState>(
         cubit: _cartBloc,
-        builder: (context, state) {
-          if (state is CartInitial) {
-            _cartBloc.add(FetchAllCarts());
-            return buildLoadingWidget();
-          } else if (state is CartFetchLoading) {
-            return buildLoadingWidget();
-          } else if (state is AllCartFetchFailure) {
-            return errorWidget(state.message);
-          } else if (state is AllCartFetchSucess) {
-            return buildSuccessUI(state.carts);
+        listener: (context, state) {
+          if (state is CartCreateLoading) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (ctx) => AlertDialog(
+                  title: Text('Creating your Cart'),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  content: Text('Loading...'),
+                ),
+              );
+            });
+          } else if (state is CartCreateSuccess) {
+            Navigator.of(context).pop();
+            final snackbar = SnackBar(
+              elevation: 0.5,
+              content: Text(
+                'Cart created successfully',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Rubik',
+                ),
+              ),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Yellow,
+            );
+            Scaffold.of(context).showSnackBar(snackbar);
+            Future.delayed(
+              Duration(seconds: 2),
+              () {
+                _cartBloc.close();
+                Navigator.of(context).pushNamed(CartScreen.routename);
+              },
+            );
           }
         },
+        child: BlocBuilder<CartBloc, CartState>(
+          cubit: _cartBloc,
+          builder: (context, state) {
+            if (state is CartInitial) {
+              _cartBloc.add(FetchAllCarts());
+              return buildLoadingWidget();
+            } else if (state is CartFetchLoading) {
+              return buildLoadingWidget();
+            } else if (state is AllCartFetchFailure) {
+              return errorWidget(state.message);
+            } else if (state is AllCartFetchSucess) {
+              return buildSuccessUI(state.carts);
+            }
+            return buildLoadingWidget();
+          },
+        ),
       ),
     );
   }
@@ -205,6 +254,7 @@ class _HomeScreenBuilderState extends State<HomeScreenBuilder> {
   }
 
   Widget buildSuccessUI(AllCarts carts) {
+    final cartlist = carts.carts.reversed.toList();
     return CustomScrollView(
       controller: _hideButtonController,
       physics: BouncingScrollPhysics(),
@@ -240,13 +290,13 @@ class _HomeScreenBuilderState extends State<HomeScreenBuilder> {
                 ),
               )
             : SliverAnimatedList(
-                initialItemCount: carts.carts.length,
+                initialItemCount: cartlist.length,
                 itemBuilder: (context, index, animation) {
                   return SlideTransition(
                     position: animation.drive(
                       Tween(begin: Offset(0, 10), end: Offset(0, 0)),
                     ),
-                    child: CartWidget(cart: carts.carts[index]),
+                    child: CartWidget(cart: cartlist[index]),
                   );
                 },
               )

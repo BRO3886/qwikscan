@@ -10,6 +10,9 @@ class FetchAllCarts extends CartEvent {
 }
 
 class CreateCart extends CartEvent {
+  final String name;
+
+  CreateCart({@required this.name});
   @override
   List<Object> get props => [];
 }
@@ -35,6 +38,9 @@ class DeleteCartItem extends CartEvent {
 }
 
 class ShowCartItems extends CartEvent {
+  final String cartId;
+
+  ShowCartItems({@required this.cartId});
   @override
   List<Object> get props => [];
 }

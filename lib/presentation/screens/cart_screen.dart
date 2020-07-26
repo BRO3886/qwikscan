@@ -200,7 +200,7 @@ class _CartScreenState extends State<CartScreen> {
                 position: animation.drive(
                   Tween(begin: Offset(0, 10), end: Offset(0, 0)),
                 ),
-                child: CartWidget(),
+                child: ListTile(),
               );
             },
           )

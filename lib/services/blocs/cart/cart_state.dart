@@ -29,3 +29,24 @@ class AllCartFetchFailure extends CartState {
   @override
   List<Object> get props => [];
 }
+
+class CartCreateLoading extends CartState {
+  @override
+  List<Object> get props => [];
+}
+
+class CartCreateSuccess extends CartState {
+  final Cart cart;
+
+  CartCreateSuccess({@required this.cart});
+  @override
+  List<Object> get props => [];
+}
+
+class CartCreateFailure extends CartState {
+  final String message;
+
+  CartCreateFailure({@required this.message});
+  @override
+  List<Object> get props => [];
+}
