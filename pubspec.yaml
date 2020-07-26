@@ -33,6 +33,7 @@ dependencies:
   flutter_bloc:
   equatable:
   http:
+  intl:
   lottie:
   qr_flutter:
   shared_preferences:

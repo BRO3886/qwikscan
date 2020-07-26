@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:qwickscan/data/models/cart.dart';
 
 import '../../utils/themes.dart';
 
 class CartWidget extends StatelessWidget {
-  const CartWidget({
-    Key key,
-  }) : super(key: key);
+  final Cart cart;
+
+  const CartWidget({Key key, this.cart}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var format = DateFormat.yMMMEd();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Material(
@@ -22,10 +25,10 @@ class CartWidget extends StatelessWidget {
           child: Container(
             child: ListTile(
               title: Text(
-                'Cart Name',
+                '${cart.cartName}',
                 style: MediumHeadingText,
               ),
-              subtitle: Text('24 JULY 2020'),
+              subtitle: Text(format.format(cart.createdAt)),
               trailing: CircleAvatar(
                 backgroundColor: Purple,
                 radius: 16,
