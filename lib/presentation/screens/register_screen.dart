@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qwickscan/presentation/screens/register_screen.dart';
+import 'package:qwickscan/presentation/screens/login_screen.dart';
 
-import '../../services/blocs/login/login_bloc.dart';
+import '../../services/blocs/register/register_bloc.dart';
 import '../../utils/themes.dart';
 import '../widgets/show_up.dart';
 import 'home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const routename = "/login";
+class RegisterScreen extends StatelessWidget {
+  static const routename = "/register";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,40 +18,51 @@ class LoginScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(40),
       ),
       body: BlocProvider(
-        create: (context) => LoginBloc(),
-        child: LoginScreenBuilder(),
+        create: (context) => RegisterBloc(),
+        child: RegisterScreenBuilder(),
       ),
     );
   }
 }
 
-class LoginScreenBuilder extends StatefulWidget {
+class RegisterScreenBuilder extends StatefulWidget {
   @override
-  _LoginScreenBuilderState createState() => _LoginScreenBuilderState();
+  _RegisterScreenBuilderState createState() => _RegisterScreenBuilderState();
 }
 
-class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
+class _RegisterScreenBuilderState extends State<RegisterScreenBuilder> {
   final _formkey = GlobalKey<FormState>();
 
-  LoginBloc _loginBloc;
+  RegisterBloc _registerBloc;
 
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _loginBloc.close();
+    _registerBloc.close();
     super.dispose();
   }
 
+  Map<String, String> userData = {
+    "name": "",
+    "email": "",
+    "password": "",
+    "image_url":
+        "https://avatars0.githubusercontent.com/u/12408595?s=460&u=fde60061cf6167c0c911af11175ecd0a0fe903c2&v=4",
+    "phone_number": ""
+  };
+
   @override
   Widget build(BuildContext context) {
-    _loginBloc = BlocProvider.of<LoginBloc>(context);
+    _registerBloc = BlocProvider.of<RegisterBloc>(context);
 
     return BlocListener(
-      cubit: _loginBloc,
+      cubit: _registerBloc,
       listener: (context, state) {
-        if (state is LoginFailed) {
+        if (state is RegisterFailed) {
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -69,11 +80,11 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
               ],
             ),
           );
-        } else if (state is LoginSuccess) {
+        } else if (state is RegisterSuccess) {
           final snackbar = SnackBar(
             elevation: 0.5,
             content: Text(
-              'Logged in successfully',
+              'Registration Successful',
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'Rubik',
@@ -90,14 +101,14 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
           );
         }
       },
-      child: BlocBuilder<LoginBloc, LoginState>(
-        cubit: _loginBloc,
+      child: BlocBuilder<RegisterBloc, RegisterState>(
+        cubit: _registerBloc,
         builder: (context, state) => buildUI(context, state),
       ),
     );
   }
 
-  Widget buildUI(BuildContext context, LoginState state) {
+  Widget buildUI(BuildContext context, RegisterState state) {
     return CustomScrollView(
       physics: BouncingScrollPhysics(),
       slivers: <Widget>[
@@ -127,7 +138,7 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
         ),
         SliverToBoxAdapter(
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
         ),
         SliverToBoxAdapter(
@@ -144,17 +155,41 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'LOGIN',
+                      'REGISTER',
                       style: BigHeadingText,
                     ),
                     Container(
-                      width: 72,
+                      width: 80,
                       height: 4,
                       decoration: BoxDecoration(
                           color: Purple, borderRadius: borderRadius8),
                     ),
                     SizedBox(
                       height: 40,
+                    ),
+                    Text(
+                      'NAME',
+                      style: NormalLightText,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      autocorrect: true,
+                      keyboardType: TextInputType.text,
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Jon Doe',
+                      ),
+                      validator: (String value) {
+                        if (value == '') {
+                          return 'This field is required';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     Text(
                       'EMAIL',
@@ -179,6 +214,34 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
                         ).hasMatch(value)) {
                           return 'Please enter correct email';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'PHONE',
+                      style: NormalLightText,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      autocorrect: false,
+                      keyboardType: TextInputType.phone,
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.phone),
+                        hintText: '8860986398',
+                      ),
+                      validator: (String value) {
+                        value.trim();
+                        if (value == '') {
+                          return 'This field is required';
+                        }
+                        if (value.length > 10) {
+                          return 'Enter 10 digit phone number';
                         }
                       },
                     ),
@@ -225,7 +288,7 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                     SizedBox(
                       height: 40,
                     ),
-                    (state is LoginLoading)
+                    (state is RegisterLoading)
                         ? Center(
                             child: LinearProgressIndicator(
                               backgroundColor: Grey,
@@ -236,7 +299,7 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                             height: 52,
                             child: RaisedButton(
                               color: Yellow,
-                              child: Text('LOGIN'),
+                              child: Text('REGISTER'),
                               textColor: Colors.white,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
@@ -246,11 +309,15 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                                 if (_formkey.currentState.validate()) {
                                   SystemChannels.textInput
                                       .invokeMethod('TextInput.hide');
-                                  _loginBloc.add(
-                                    LoginIniated(
-                                      email: _emailController.text,
-                                      password: _passwordController.text,
-                                    ),
+
+                                  userData["name"] = _nameController.text;
+                                  userData["password"] =
+                                      _passwordController.text;
+                                  userData["email"] = _emailController.text;
+                                  userData["phone_number"] =
+                                      _phoneController.text;
+                                  _registerBloc.add(
+                                    RegisterInitated(userData: userData),
                                   );
                                 }
                               },
@@ -266,16 +333,16 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                           borderRadius: borderRadius8,
                         ),
                         onPressed: () => Navigator.of(context)
-                            .pushReplacementNamed(RegisterScreen.routename),
+                            .pushReplacementNamed(LoginScreen.routename),
                         child: RichText(
                           text: TextSpan(
                             style: SmallGreyText,
                             children: [
                               TextSpan(
-                                text: 'DONT HAVE AN ACCOUNT? ',
+                                text: 'ALREADY HAVE AN ACCOUNT? ',
                               ),
                               TextSpan(
-                                text: 'SIGN UP',
+                                text: 'LOGIN',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
                                 ),
@@ -284,7 +351,10 @@ class _LoginScreenBuilderState extends State<LoginScreenBuilder> {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
                   ],
                 ),
               ),

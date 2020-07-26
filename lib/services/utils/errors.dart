@@ -5,3 +5,5 @@ const String EXCEPTION = "Something went wrong, please try again later";
 
 const String INVALID_CREDS =
     "Inavlid credentials! Please check your credentials and try again";
+
+const String USER_EXSTS = "A user with these credentials already exists!";

@@ -2,6 +2,19 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
+  Future<String> getUserPhoto() async {
+    final SharedPreferences preferences = await SharedPreferences.getInstance();
+    final key = "avatar";
+    return preferences.getString(key);
+  }
+
+  void setUserPhoto(String value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final key = 'avatar';
+    prefs.setString(key, value);
+    print("avatar stored");
+  }
+
   Future<String> getUserEmail() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     final key = "email";

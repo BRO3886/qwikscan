@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qwickscan/presentation/screens/register_screen.dart';
 
 import 'presentation/screens/cart_screen.dart';
 import 'presentation/screens/home_screen.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         LoginScreen.routename: (context) => LoginScreen(),
+        RegisterScreen.routename: (context) => RegisterScreen(),
         HomeScreen.routename: (context) => HomeScreen(),
         CartScreen.routename: (context) => CartScreen(),
         QRDisplayScreen.routename: (context) => QRDisplayScreen(),

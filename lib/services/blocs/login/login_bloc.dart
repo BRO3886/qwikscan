@@ -32,6 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield LoginSuccess(user: apiResponse.data);
           var user = apiResponse.data.user;
           sp.setName(user.name);
+          sp.setUserPhoto(user.imageUrl);
           sp.setUserEmail(user.email);
           sp.setUserID(user.userId);
           sp.setUserToken(apiResponse.data.token);

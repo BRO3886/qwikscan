@@ -10,6 +10,7 @@ import '../models/user.dart';
 
 class UserRepository {
   final _uri = BaseURL + UserGroup;
+
   Future<ApiResponse<User>> login(String email, String password) async {
     print("entered login");
     final url = _uri + LoginRoute;
@@ -37,6 +38,42 @@ class UserRepository {
           break;
         case 500:
           return ApiResponse.error(EXCEPTION);
+          break;
+        default:
+          return ApiResponse.error("unhandled! " + EXCEPTION);
+          break;
+      }
+    } on SocketException {
+      return ApiResponse.error(NO_INTERNET_CONNECTION);
+    } catch (e) {
+      print(e.toString());
+      return ApiResponse.error(EXCEPTION + "error: ${e.toString()}");
+    }
+  }
+
+  Future<ApiResponse<User>> register(Map<String, String> data) async {
+    print("entered reg");
+    final url = _uri + RegisterRoute;
+    print("reg to : $url");
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode(data),
+      );
+
+      print(response.statusCode);
+      print(response.body);
+
+      switch (response.statusCode) {
+        case 201:
+          return ApiResponse.completed(
+            userFromJson(utf8.decode(response.bodyBytes)),
+          );
+          break;
+        case 409:
+          return ApiResponse.error(USER_EXSTS);
+        default:
+          return ApiResponse.error("unhandled! " + EXCEPTION);
           break;
       }
     } on SocketException {
