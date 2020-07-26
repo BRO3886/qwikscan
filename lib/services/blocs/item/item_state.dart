@@ -32,6 +32,9 @@ class FetchItemsFailure extends ItemState {
 }
 
 class AddItemSuccess extends ItemState {
+  final Item item;
+
+  AddItemSuccess({@required this.item});
   @override
   List<Object> get props => [];
 }

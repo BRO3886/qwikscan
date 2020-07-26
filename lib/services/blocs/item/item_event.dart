@@ -5,6 +5,9 @@ abstract class ItemEvent extends Equatable {
 }
 
 class AddItem extends ItemEvent {
+  final Map<String, dynamic> data;
+
+  AddItem({@required this.data});
   @override
   List<Object> get props => [];
 }

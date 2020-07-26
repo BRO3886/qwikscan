@@ -95,7 +95,10 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => ItemScanScreen(cameras: cameras),
+        builder: (context) => ItemScanScreen(
+          cameras: cameras,
+          cartId: widget.cart.cartId,
+        ),
       ),
     );
   }
@@ -284,6 +287,7 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: TextField(
+              enabled: false,
               maxLines: 2,
               minLines: 1,
               expands: false,
@@ -302,7 +306,7 @@ class _CartScreenHistoryBuilderState extends State<CartScreenHistoryBuilder> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${items.totalPrice}',
+                  'TOTAL: ₹${items.totalPrice}',
                   style: MediumHeadingText,
                 ),
                 SizedBox(

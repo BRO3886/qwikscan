@@ -21,19 +21,42 @@ class ItemWidget extends StatelessWidget {
         ),
         child: InkWell(
           borderRadius: borderRadius12,
-          onTap: () {},
+          onTap: null,
           child: Container(
             child: ListTile(
+              contentPadding: EdgeInsets.all(16),
               title: Text(
                 '${item.itemName}',
                 style: MediumHeadingText,
               ),
-              subtitle: Text(format.format(item.createdAt)),
-              trailing: CircleAvatar(
-                backgroundColor: Purple,
-                radius: 16,
-                foregroundColor: Colors.white,
-                child: Icon(Icons.navigate_next),
+              leading: ClipRRect(
+                borderRadius: borderRadius8,
+                child: Image.network(
+                  "https://iowaagliteracy.files.wordpress.com/2018/09/apple10.jpg",
+                ),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text('QTY: ${item.itemQuantity} | ₹ ${item.itemPrice}'),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'SUBTOTAL: ₹ ${item.itemQuantity * item.itemPrice}',
+                    style: TextStyle(color: Colors.black),
+                  )
+                ],
+              ),
+              trailing: IconButton(
+                onPressed: () {},
+                icon: CircleAvatar(
+                  backgroundColor: Colors.redAccent,
+                  radius: 16,
+                  foregroundColor: Colors.white,
+                  child: Icon(Icons.delete),
+                ),
               ),
             ),
           ),

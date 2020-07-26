@@ -90,13 +90,21 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
       print('Error: $e.code\nError Message: $e.message');
       return;
     }
-    Navigator.push(
+    final data = await Navigator.push(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => ItemScanScreen(cameras: cameras),
+        builder: (context) => ItemScanScreen(
+          cameras: cameras,
+          cartId: widget.cart.cartId,
+        ),
       ),
     );
+    if (data == true) {
+      _itemBloc.add(GetCartItems(
+        cartId: widget.cart.cartId,
+      ));
+    }
   }
 
   @override
@@ -169,6 +177,7 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
             } else if (state is FetchItemsSuccess) {
               return buildSuccessUI(context, state.items);
             }
+            return buildLoadingWidget();
           },
         ),
       ),
@@ -283,6 +292,9 @@ class _CartScreenBuilderState extends State<CartScreenBuilder> {
             child: TextField(
               maxLines: 2,
               minLines: 1,
+              onEditingComplete: () async {
+                //TODO: complete fn
+              },
               expands: false,
               controller: _titleController,
               style: PurpleHeadingText.copyWith(fontSize: 20),

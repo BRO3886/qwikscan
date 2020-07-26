@@ -45,4 +45,45 @@ class ItemRepository {
       return ApiResponse.error(EXCEPTION + "error: ${e.toString()}");
     }
   }
+
+  Future<ApiResponse<Item>> addItem(
+    String token,
+    Map<String, dynamic> data,
+  ) async {
+    final url = uri + AddItemRoute;
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+        body: jsonEncode(data),
+      );
+
+      print(response.statusCode);
+
+      switch (response.statusCode) {
+        case 201:
+          Map<String, dynamic> jsonResp =
+              jsonDecode(utf8.decode(response.bodyBytes));
+          return ApiResponse.completed(Item.fromJson(jsonResp["item"]));
+          break;
+        case 401:
+          return ApiResponse.error(INVALID_CREDS);
+          break;
+        case 500:
+          return ApiResponse.error(EXCEPTION);
+          break;
+        default:
+          return ApiResponse.error("unhandled! " + EXCEPTION);
+          break;
+      }
+    } on SocketException {
+      return ApiResponse.error(NO_INTERNET_CONNECTION);
+    } catch (e) {
+      print(e.toString());
+      return ApiResponse.error(EXCEPTION + "error: ${e.toString()}");
+    }
+  }
 }

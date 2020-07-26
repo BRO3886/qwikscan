@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:qwickscan/services/blocs/item/item_bloc.dart';
 import 'package:tflite/tflite.dart';
 
 import '../../../utils/constants.dart';
@@ -11,8 +12,9 @@ import 'camera.dart';
 
 class ItemScanScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
+  final String cartId;
 
-  ItemScanScreen({@required this.cameras});
+  ItemScanScreen({@required this.cameras, @required this.cartId});
 
   @override
   _ItemScanScreenState createState() => _ItemScanScreenState();
@@ -93,6 +95,7 @@ class _ItemScanScreenState extends State<ItemScanScreen> {
                   screen.height,
                   screen.width,
                   _model,
+                  widget.cartId,
                 ),
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.05,
@@ -104,7 +107,7 @@ class _ItemScanScreenState extends State<ItemScanScreen> {
                       foregroundColor: Colors.white,
                     ),
                     // color: Colors.red,
-                    onPressed: () => Navigator.maybePop(context),
+                    onPressed: () => Navigator.pop(context, true),
                   ),
                 ),
               ],
