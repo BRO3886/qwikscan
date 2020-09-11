@@ -59,3 +59,44 @@ samples, guidance on mobile development, and a full API reference.
 ## Resources
 
 [Design- Figma File](https://www.figma.com/file/GnB8hOq9JGvUX5EfHZV8fU/Apptitude?node-id=3%3A5)
+
+
+
+## Contributors
+
+<table>
+<tr align="center">
+
+
+<td>
+
+Siddhartha Varma
+
+<p align="center">
+<img src = "https://avatars0.githubusercontent.com/u/39856034?s=460&u=bc04040bb155970cb743c7963c201a092b0e960c&v=4" width="150" height="150" alt="Siddhartha">
+</p>
+<p align="center">
+<a href = "https://github.com/BRO3886"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36" alt="GitHub"/></a>
+<a href = "https://www.linkedin.com/in/siddharthav22">
+<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36" alt="LinkedIn"/>
+</a>
+</p>
+</td>
+
+
+<td>
+Rithik Jain
+
+<p align="center">
+<img src = "https://avatars2.githubusercontent.com/u/12408595?s=460&u=8c49665f477bda73c00473dd3f5131156a5ecc31&v=4" width="150" height="150" alt="Rithik">
+</p>
+<p align="center">
+<a href = "https://github.com/rithikjain"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36" alt="GitHub"/></a>
+<a href = "https://www.linkedin.com/in/rithik-jain-710b3a199/">
+<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36" alt="LinkedIn"/>
+</a>
+</p>
+</td>
+</tr>
+  </table>
+
